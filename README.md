@@ -151,7 +151,7 @@ gcloud services enable run.googleapis.com containerregistry.googleapis.com
 ### Build & Push Docker Image
 
 ```bash
-cd backend
+# Run from the root of the project
 docker build -t gcr.io/YOUR_PROJECT_ID/voteflow-backend:latest .
 docker push gcr.io/YOUR_PROJECT_ID/voteflow-backend:latest
 ```
@@ -173,12 +173,6 @@ gcloud run deploy voteflow-backend \
 > ```bash
 > gcloud secrets create voteflow-sa-key --data-file=serviceAccountKey.json
 > ```
-
-Then update `server.js` to parse the env var:
-```js
-// In server.js, replace the require() with:
-const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_JSON);
-```
 
 ### Get the Cloud Run URL
 

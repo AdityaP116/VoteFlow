@@ -139,7 +139,7 @@ npm run dev
 
 ---
 
-## 🐳 Deploy Backend to Cloud Run
+## 🐳 Deploy to Cloud Run (Unified Full-Stack)
 
 ### Prerequisites
 ```bash
@@ -152,15 +152,16 @@ gcloud services enable run.googleapis.com containerregistry.googleapis.com
 
 ```bash
 # Run from the root of the project
-docker build -t gcr.io/YOUR_PROJECT_ID/voteflow-backend:latest .
-docker push gcr.io/YOUR_PROJECT_ID/voteflow-backend:latest
+# This builds both the Vite frontend and Express backend into a single container
+docker build -t gcr.io/YOUR_PROJECT_ID/voteflow:latest .
+docker push gcr.io/YOUR_PROJECT_ID/voteflow:latest
 ```
 
 ### Deploy to Cloud Run
 
 ```bash
-gcloud run deploy voteflow-backend \
-  --image gcr.io/YOUR_PROJECT_ID/voteflow-backend:latest \
+gcloud run deploy voteflow \
+  --image gcr.io/YOUR_PROJECT_ID/voteflow:latest \
   --platform managed \
   --region asia-south1 \
   --port 8080 \
@@ -174,27 +175,15 @@ gcloud run deploy voteflow-backend \
 > gcloud secrets create voteflow-sa-key --data-file=serviceAccountKey.json
 > ```
 
-### Get the Cloud Run URL
+### Get your Live URL
 
 ```bash
-gcloud run services describe voteflow-backend \
+gcloud run services describe voteflow \
   --region asia-south1 \
   --format "value(status.url)"
 ```
 
-Set this URL as `VITE_BACKEND_URL` in your frontend `.env`.
-
----
-
-## 🌐 Deploy Frontend (Firebase Hosting)
-
-```bash
-npm install -g firebase-tools
-firebase login
-firebase init hosting   # select your project, set build/dist as public dir
-cd frontend && npm run build
-firebase deploy --only hosting
-```
+Visit this URL in your browser to use the full VoteFlow app!
 
 ---
 

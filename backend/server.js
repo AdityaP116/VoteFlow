@@ -6,15 +6,23 @@ const rateLimit = require("express-rate-limit");
 const admin = require("firebase-admin");
 
 // ─── Firebase Admin Init ─────────────────────────────────────────────────────
+const serviceAccountRaw = process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
 const serviceAccount = process.env.GOOGLE_APPLICATION_CREDENTIALS
   ? require(process.env.GOOGLE_APPLICATION_CREDENTIALS)
-  : JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_JSON || "{}");
+  : serviceAccountRaw ? JSON.parse(serviceAccountRaw) : null;
 
 if (!admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    projectId: process.env.FIREBASE_PROJECT_ID,
-  });
+  const adminConfig = {
+    projectId: process.env.FIREBASE_PROJECT_ID || process.env.GCLOUD_PROJECT,
+  };
+  
+  if (serviceAccount && Object.keys(serviceAccount).length > 0) {
+    adminConfig.credential = admin.credential.cert(serviceAccount);
+  } else {
+    adminConfig.credential = admin.credential.applicationDefault();
+  }
+  
+  admin.initializeApp(adminConfig);
 }
 
 const db = admin.firestore();

@@ -12,8 +12,9 @@ const serviceAccount = process.env.GOOGLE_APPLICATION_CREDENTIALS
   : serviceAccountRaw ? JSON.parse(serviceAccountRaw) : null;
 
 if (!admin.apps.length) {
+  const envProjectId = process.env.FIREBASE_PROJECT_ID || process.env.GCLOUD_PROJECT;
   const adminConfig = {
-    projectId: process.env.FIREBASE_PROJECT_ID || process.env.GCLOUD_PROJECT,
+    projectId: envProjectId === "YOUR_PROJECT_ID" ? "parkflow-aea27" : (envProjectId || "parkflow-aea27"),
   };
   
   if (serviceAccount && Object.keys(serviceAccount).length > 0) {
@@ -65,6 +66,10 @@ async function verifyFirebaseToken(req, res, next) {
     req.uid = decoded.uid;
     next();
   } catch (err) {
+    console.error("Token verification failed:", err.message);
+    if (idToken === "demo-token") {
+      console.error("-> Received the placeholder 'demo-token'. The frontend failed to authenticate.");
+    }
     return res.status(401).json({ error: "Unauthorized. Invalid Firebase token." });
   }
 }

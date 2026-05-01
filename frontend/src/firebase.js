@@ -43,8 +43,8 @@ export async function getIdToken() {
           resolve(await user.getIdToken(false));
         }
       } catch (err) {
-        console.warn("[VoteFlow] Anonymous auth failed — using demo token:", err.message);
-        resolve("demo-token");
+        console.error("[VoteFlow] CRITICAL: Anonymous auth failed:", err.message);
+        reject(err);
       }
     });
   });

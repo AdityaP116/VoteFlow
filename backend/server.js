@@ -271,6 +271,15 @@ app.get("/health", (_req, res) => {
   });
 });
 
+// ─── Serve Frontend (Unified Deployment) ──────────────────────────────────────
+const path = require("path");
+const frontendDistPath = path.join(__dirname, "../frontend/dist");
+app.use(express.static(frontendDistPath));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(frontendDistPath, "index.html"));
+});
+
 // ─── Start Server ─────────────────────────────────────────────────────────────
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`VoteFlow backend running on port ${PORT}`);

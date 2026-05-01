@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getIdToken } from "./firebase";
 
-const BASE_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:8080";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL || (import.meta.env.PROD ? "" : "http://localhost:8080");
 
 const apiClient = axios.create({ baseURL: BASE_URL });
 

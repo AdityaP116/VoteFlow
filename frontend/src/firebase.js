@@ -8,7 +8,6 @@ const firebaseConfig = {
   projectId: "parkflow-aea27",
   storageBucket: "parkflow-aea27.firebasestorage.app",
   messagingSenderId: "780295868152",
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:000000000000:web:000000000000",
   measurementId: "G-1063MH4QXY"
 };
 

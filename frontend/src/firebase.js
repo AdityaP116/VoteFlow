@@ -3,10 +3,13 @@ import { getAuth, signInAnonymously, onAuthStateChanged } from "firebase/auth";
 
 // ── Provide safe fallback values so the app never crashes on load ──
 const firebaseConfig = {
-  apiKey:      import.meta.env.VITE_FIREBASE_API_KEY      || "demo-api-key",
-  authDomain:  import.meta.env.VITE_FIREBASE_AUTH_DOMAIN  || "demo-project.firebaseapp.com",
-  projectId:   import.meta.env.VITE_FIREBASE_PROJECT_ID   || "demo-project",
-  appId:       import.meta.env.VITE_FIREBASE_APP_ID       || "1:000000000000:web:000000000000",
+  apiKey: "AIzaSyB9E8JL0JnbxGZfPh9MKvOEfBZBjjfkTU8",
+  authDomain: "parkflow-aea27.firebaseapp.com",
+  projectId: "parkflow-aea27",
+  storageBucket: "parkflow-aea27.firebasestorage.app",
+  messagingSenderId: "780295868152",
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:000000000000:web:000000000000",
+  measurementId: "G-1063MH4QXY"
 };
 
 let app;
